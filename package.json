@@ -16,8 +16,7 @@
   "author": "Eddiehub Community",
   "license": "MIT",
   "peerDependencies": {
-    "@nestjs/common": "^7.0.0",
-    "@nestjs/config": "^0.6.0"
+    "@nestjs/common": "^7.0.0"
   },
   "devDependencies": {
     "@nestjs/common": "^7.6.15",
@@ -45,5 +44,8 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "dependencies": {
+    "@astrajs/collections": "0.0.13"
   }
 }
