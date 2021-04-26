@@ -1,14 +1,23 @@
 import { DynamicModule, Module } from "@nestjs/common";
+import { AstraCoreModule } from "./astra-core.module";
 import { AstraService } from "./astra.service";
-import { CONFIG_OPTIONS } from "./constants";
-import { AstraModuleConfig } from "./interfaces/astra-modue-config.interface";
+import { AstraDatastaxConfig } from "./interfaces/astra-config-datastax.interface";
+import { AstraLocalConfig } from "./interfaces/astra-config-local.interface";
 
 @Module({})
 export class AstraModule {
-  static forFeature(options: AstraModuleConfig): DynamicModule {
+  static forRoot(
+    options: AstraLocalConfig | AstraDatastaxConfig
+  ): DynamicModule {
     return {
       module: AstraModule,
-      providers: [{ provide: CONFIG_OPTIONS, useValue: options }, AstraService],
+      imports: [AstraCoreModule.forRoot(options)],
+    };
+  }
+  static forFeature(): DynamicModule {
+    return {
+      module: AstraModule,
+      providers: [],
       exports: [AstraService],
     };
   }

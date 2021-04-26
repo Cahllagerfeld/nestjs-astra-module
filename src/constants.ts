@@ -1,1 +1,2 @@
 export const CONFIG_OPTIONS = "CONFIG_OPTIONS";
+export const DATASTAX_CLIENT = "DATASTAX_CLIENT";
