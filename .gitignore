@@ -1,0 +1,9 @@
+#dependencies
+node_modules
+
+#dist
+dist/
+
+#tests
+test/
+coverage/
