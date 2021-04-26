@@ -1,6 +1,7 @@
 import { DynamicModule, Global, Module } from "@nestjs/common";
 import { AstraDatastaxConfig } from "./interfaces/astra-config-datastax.interface";
 import { AstraLocalConfig } from "./interfaces/astra-config-local.interface";
+// @ts-ignore
 import { createClient } from "@astrajs/collections";
 import { DATASTAX_CLIENT } from "./constants";
 
