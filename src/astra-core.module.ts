@@ -2,4 +2,4 @@ import { Global, Module } from "@nestjs/common";
 
 @Global()
 @Module({})
-export class AstraModule {}
+export class AstraCoreModule {}
