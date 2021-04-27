@@ -41,7 +41,7 @@ export class AstraService {
    * @param options Possible searchoptions
    * @returns
    */
-  public find(query: any, options?: any): Observable<any> {
+  public find(query?: any, options?: any): Observable<any> {
     return from(this.collection.find(query, options));
   }
 
