@@ -31,8 +31,8 @@ export class AstraService {
    * @returns
    */
   public create<T>(document: T, id?: string): Observable<any> {
-    const user = this.collection.create(id, document);
-    return from(user);
+    if (!id) return from(this.collection.create(document));
+    return from(this.collection.create(id, document));
   }
 
   /**
@@ -42,8 +42,7 @@ export class AstraService {
    * @returns
    */
   public find(query: any, options?: any): Observable<any> {
-    const result = this.collection.find(query, options);
-    return from(result);
+    return from(this.collection.find(query, options));
   }
 
   /**
@@ -53,8 +52,7 @@ export class AstraService {
    * @returns
    */
   public findOne(query: any, options?: any): Observable<any> {
-    const result = this.collection.findOne(query, options);
-    return from(result);
+    return from(this.collection.findOne(query, options));
   }
 
   /**
@@ -64,8 +62,7 @@ export class AstraService {
    * @returns
    */
   public update<T>(path: string, document: any): Observable<any> {
-    const result = this.collection.update(path, document);
-    return from(result);
+    return from(this.collection.update(path, document));
   }
 
   /**
@@ -75,8 +72,7 @@ export class AstraService {
    * @returns
    */
   public replace<T>(path: string, document: T): Observable<any> {
-    const result = this.collection.replace(path, document);
-    return from(result);
+    return from(this.collection.replace(path, document));
   }
 
   /**
@@ -85,7 +81,6 @@ export class AstraService {
    * @returns
    */
   public delete(path: string): Observable<any> {
-    const result = this.collection.delete(path);
-    return from(result);
+    return from(this.collection.delete(path));
   }
 }
