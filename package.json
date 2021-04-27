@@ -16,7 +16,9 @@
   "author": "Eddiehub Community",
   "license": "MIT",
   "peerDependencies": {
-    "@nestjs/common": "^7.0.0"
+    "@nestjs/common": "^7.0.0",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.0.0"
   },
   "devDependencies": {
     "@nestjs/common": "^7.6.15",
