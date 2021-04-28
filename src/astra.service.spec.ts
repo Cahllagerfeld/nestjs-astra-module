@@ -1,17 +1,17 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { AstraService } from "./astra.service";
-import { CLIENT_OPTIONS } from "./constants";
-import { AstraCoreModule } from "./astra-core.module";
-import { AstraLocalConfig } from "./interfaces/astra-config-local.interface";
+import { Test, TestingModule } from '@nestjs/testing';
+import { AstraService } from './astra.service';
+import { CLIENT_OPTIONS } from './constants';
+import { AstraCoreModule } from './astra-core.module';
+import { AstraLocalConfig } from './interfaces/astra-config-local.interface';
 
-describe("AstraService", () => {
+describe('AstraService', () => {
   let service: AstraService;
 
   beforeEach(async () => {
     const options: AstraLocalConfig = {
-      authToken: "asdf",
-      baseApiPath: "v2/namespaces",
-      baseUrl: "http://localhost:8082",
+      authToken: 'asdf',
+      baseApiPath: 'v2/namespaces',
+      baseUrl: 'http://localhost:8082',
     };
     const module: TestingModule = await Test.createTestingModule({
       imports: [AstraCoreModule.forRoot(options)],
@@ -21,7 +21,7 @@ describe("AstraService", () => {
     service = module.get<AstraService>(AstraService);
   });
 
-  it("should be defined", () => {
+  it('should be defined', () => {
     expect(service).toBeDefined();
   });
 });

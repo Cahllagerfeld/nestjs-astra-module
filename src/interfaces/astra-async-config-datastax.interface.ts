@@ -1,8 +1,8 @@
-import { ModuleMetadata, Type } from "@nestjs/common";
-import { AstraDatastaxConfig } from "./astra-config-datastax.interface";
-import { DatastaxOptionsFactory } from "./connectionfactory.interface";
+import { ModuleMetadata, Type } from '@nestjs/common';
+import { AstraDatastaxConfig } from './astra-config-datastax.interface';
+import { DatastaxOptionsFactory } from './connectionfactory.interface';
 export interface AsyncAstraDatastaxConfig
-  extends Pick<ModuleMetadata, "imports"> {
+  extends Pick<ModuleMetadata, 'imports'> {
   inject?: any[];
   useFactory?: (
     ...args: any[]

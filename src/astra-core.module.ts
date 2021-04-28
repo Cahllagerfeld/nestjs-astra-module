@@ -1,12 +1,12 @@
-import { DynamicModule, Global, Module, Provider, Type } from "@nestjs/common";
-import { AstraDatastaxConfig } from "./interfaces/astra-config-datastax.interface";
-import { AstraLocalConfig } from "./interfaces/astra-config-local.interface";
+import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common';
+import { AstraDatastaxConfig } from './interfaces/astra-config-datastax.interface';
+import { AstraLocalConfig } from './interfaces/astra-config-local.interface';
 // @ts-ignore
-import { createClient } from "@astrajs/collections";
-import { CLIENT_OPTIONS, DATASTAX_CLIENT } from "./constants";
-import { AsyncAstraDatastaxConfig } from "./interfaces/astra-async-config-datastax.interface";
-import { AsyncAstraLocalConfig } from "./interfaces/astra-async-config-local.interface";
-import { DatastaxOptionsFactory } from "./interfaces/connectionfactory.interface";
+import { createClient } from '@astrajs/collections';
+import { CLIENT_OPTIONS, DATASTAX_CLIENT } from './constants';
+import { AsyncAstraDatastaxConfig } from './interfaces/astra-async-config-datastax.interface';
+import { AsyncAstraLocalConfig } from './interfaces/astra-async-config-local.interface';
+import { DatastaxOptionsFactory } from './interfaces/connectionfactory.interface';
 
 const connectionFactory = (options: AstraLocalConfig | AstraDatastaxConfig) => {
   return {
@@ -20,7 +20,7 @@ const connectionFactory = (options: AstraLocalConfig | AstraDatastaxConfig) => {
 @Module({})
 export class AstraCoreModule {
   static forRoot(
-    options: AstraLocalConfig | AstraDatastaxConfig
+    options: AstraLocalConfig | AstraDatastaxConfig,
   ): DynamicModule {
     const providers = [connectionFactory(options)];
     return {
@@ -31,13 +31,13 @@ export class AstraCoreModule {
   }
 
   static forRootAsync(
-    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig
+    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig,
   ): DynamicModule {
     const provider: Provider = {
       inject: [CLIENT_OPTIONS],
       provide: DATASTAX_CLIENT,
       useFactory: async (
-        options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig
+        options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig,
       ) => await createClient(options),
     };
     return {
@@ -48,7 +48,7 @@ export class AstraCoreModule {
   }
 
   private static createAsyncProviders(
-    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig
+    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig,
   ): Provider[] {
     if (options.useExisting || options.useFactory) {
       return [this.createAsyncOptionsProvider(options)];
@@ -64,7 +64,7 @@ export class AstraCoreModule {
   }
 
   private static createAsyncOptionsProvider(
-    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig
+    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig,
   ): Provider {
     if (options.useFactory) {
       return {

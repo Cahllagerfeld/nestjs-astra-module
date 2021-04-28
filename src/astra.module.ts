@@ -1,17 +1,17 @@
-import { DynamicModule, Module } from "@nestjs/common";
-import { AstraCoreModule } from "./astra-core.module";
-import { AstraService } from "./astra.service";
-import { CLIENT_OPTIONS } from "./constants";
-import { AsyncAstraDatastaxConfig } from "./interfaces/astra-async-config-datastax.interface";
-import { AsyncAstraLocalConfig } from "./interfaces/astra-async-config-local.interface";
-import { AstraClientConfig } from "./interfaces/astra-client-config.interface";
-import { AstraDatastaxConfig } from "./interfaces/astra-config-datastax.interface";
-import { AstraLocalConfig } from "./interfaces/astra-config-local.interface";
+import { DynamicModule, Module } from '@nestjs/common';
+import { AstraCoreModule } from './astra-core.module';
+import { AstraService } from './astra.service';
+import { CLIENT_OPTIONS } from './constants';
+import { AsyncAstraDatastaxConfig } from './interfaces/astra-async-config-datastax.interface';
+import { AsyncAstraLocalConfig } from './interfaces/astra-async-config-local.interface';
+import { AstraClientConfig } from './interfaces/astra-client-config.interface';
+import { AstraDatastaxConfig } from './interfaces/astra-config-datastax.interface';
+import { AstraLocalConfig } from './interfaces/astra-config-local.interface';
 
 @Module({})
 export class AstraModule {
   static forRoot(
-    options: AstraLocalConfig | AstraDatastaxConfig
+    options: AstraLocalConfig | AstraDatastaxConfig,
   ): DynamicModule {
     return {
       module: AstraModule,
@@ -27,7 +27,7 @@ export class AstraModule {
   }
 
   static forRootAsync(
-    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig
+    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig,
   ): DynamicModule {
     return {
       module: AstraModule,
