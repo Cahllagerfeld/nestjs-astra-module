@@ -1,14 +1,14 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { CLIENT_OPTIONS, DATASTAX_CLIENT } from "./constants";
-import { AstraClientConfig } from "./interfaces/astra-client-config.interface";
-import { from, Observable } from "rxjs";
+import { Inject, Injectable } from '@nestjs/common';
+import { CLIENT_OPTIONS, DATASTAX_CLIENT } from './constants';
+import { AstraClientConfig } from './interfaces/astra-client-config.interface';
+import { from, Observable } from 'rxjs';
 
 @Injectable()
 export class AstraService {
   private collection: any;
   constructor(
     @Inject(CLIENT_OPTIONS) private readonly options: AstraClientConfig,
-    @Inject(DATASTAX_CLIENT) private readonly client: any
+    @Inject(DATASTAX_CLIENT) private readonly client: any,
   ) {
     this.collection = client
       .namespace(options.namespace)
@@ -61,7 +61,7 @@ export class AstraService {
    * @param document Document with which the existing should be updated
    * @returns
    */
-  public update<T>(path: string, document: any): Observable<any> {
+  public update<T>(path: string, document: T): Observable<any> {
     return from(this.collection.update(path, document));
   }
 
