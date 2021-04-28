@@ -31,7 +31,7 @@ export class AstraModule {
   ): DynamicModule {
     return {
       module: AstraModule,
-      imports: [AstraModule.forRootAsync(options)],
+      imports: [AstraCoreModule.forRootAsync(options)],
     };
   }
 }
