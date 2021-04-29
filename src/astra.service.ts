@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CLIENT_OPTIONS, DATASTAX_CLIENT } from './constants';
 import { AstraClientConfig } from './interfaces/astra-client-config.interface';
 import { from, Observable } from 'rxjs';
-import { createDocument } from './interfaces/createDocument.interface';
+import { documentId } from './interfaces/documentId.interface';
 
 @Injectable()
 export class AstraService {
@@ -31,8 +31,8 @@ export class AstraService {
    * @param id The desired ID
    * @returns document ID of created document
    */
-  public create<T>(document: T, id?: string): Observable<createDocument> {
-    let promise: Promise<createDocument>;
+  public create<T>(document: T, id?: string): Observable<documentId> {
+    let promise: Promise<documentId>;
     if (!id) {
       promise = this.collection.create(document);
       return from(promise);
@@ -57,8 +57,9 @@ export class AstraService {
    * @param options Possible searchoptions
    * @returns
    */
-  public findOne(query: any, options?: any): Observable<any> {
-    return from(this.collection.findOne(query, options));
+  public findOne<T>(query: any, options?: any): Observable<T> {
+    const promise: Promise<T> = this.collection.findOne(query, options);
+    return from(promise);
   }
 
   /**
@@ -67,8 +68,9 @@ export class AstraService {
    * @param document Document with which the existing should be updated
    * @returns
    */
-  public update<T>(path: string, document: T): Observable<any> {
-    return from(this.collection.update(path, document));
+  public update<T>(path: string, document: T): Observable<documentId> {
+    const promise: Promise<documentId> = this.collection.update(path, document);
+    return from(promise);
   }
 
   /**
@@ -77,8 +79,12 @@ export class AstraService {
    * @param document Document with which the specified docuent should be updated
    * @returns
    */
-  public replace<T>(path: string, document: T): Observable<any> {
-    return from(this.collection.replace(path, document));
+  public replace<T>(path: string, document: T): Observable<documentId> {
+    const promise: Promise<documentId> = this.collection.replace(
+      path,
+      document,
+    );
+    return from(promise);
   }
 
   /**
