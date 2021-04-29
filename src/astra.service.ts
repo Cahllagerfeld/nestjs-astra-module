@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CLIENT_OPTIONS, DATASTAX_CLIENT } from './constants';
 import { AstraClientConfig } from './interfaces/astra-client-config.interface';
 import { from, Observable } from 'rxjs';
+import { createDocument } from './interfaces/createDocument.interface';
 
 @Injectable()
 export class AstraService {
@@ -19,8 +20,8 @@ export class AstraService {
    * @param id ID of the document, that should be retrieved
    * @returns
    */
-  public get(id: string): Observable<any> {
-    const response = this.collection.get(id);
+  public get<T>(id: string): Observable<T> {
+    const response: Promise<T> = this.collection.get(id);
     return from(response);
   }
 
@@ -28,11 +29,16 @@ export class AstraService {
    * Creates a new Document
    * @param document The document that should be created
    * @param id The desired ID
-   * @returns
+   * @returns document ID of created document
    */
-  public create<T>(document: T, id?: string): Observable<any> {
-    if (!id) return from(this.collection.create(document));
-    return from(this.collection.create(id, document));
+  public create<T>(document: T, id?: string): Observable<createDocument> {
+    let promise: Promise<createDocument>;
+    if (!id) {
+      promise = this.collection.create(document);
+      return from(promise);
+    }
+    promise = this.collection.create(id, document);
+    return from(promise);
   }
 
   /**
