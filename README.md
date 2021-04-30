@@ -21,6 +21,6 @@ For testing it with a local project use
 $ npm link
 
 #connects package to a local npm-project
-$ npm link nestjs-astra // links module to a local npm project
+$ npm link nestjs-astra
 
 ```
