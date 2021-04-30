@@ -3,6 +3,7 @@ import { CLIENT_OPTIONS, DATASTAX_CLIENT } from './constants';
 import { AstraClientConfig } from './interfaces/astra-client-config.interface';
 import { from, Observable } from 'rxjs';
 import { documentId } from './interfaces/documentId.interface';
+import { findResult } from './interfaces/findResult.interface';
 
 @Injectable()
 export class AstraService {
@@ -47,8 +48,12 @@ export class AstraService {
    * @param options Possible searchoptions
    * @returns
    */
-  public find(query?: any, options?: any): Observable<any> {
-    return from(this.collection.find(query, options));
+  public find<T>(query?: any, options?: any): Observable<findResult<T>> {
+    const promise: Promise<findResult<T>> = this.collection.find(
+      query,
+      options,
+    );
+    return from(promise);
   }
 
   /**
