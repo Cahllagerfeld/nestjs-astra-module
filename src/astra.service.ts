@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CLIENT_OPTIONS, DATASTAX_CLIENT } from './constants';
 import { AstraClientConfig } from './interfaces/astra-client-config.interface';
 import { from, Observable } from 'rxjs';
+import { documentId } from './interfaces/documentId.interface';
 
 @Injectable()
 export class AstraService {
@@ -19,8 +20,8 @@ export class AstraService {
    * @param id ID of the document, that should be retrieved
    * @returns
    */
-  public get(id: string): Observable<any> {
-    const response = this.collection.get(id);
+  public get<T>(id: string): Observable<T> {
+    const response: Promise<T> = this.collection.get(id);
     return from(response);
   }
 
@@ -28,11 +29,16 @@ export class AstraService {
    * Creates a new Document
    * @param document The document that should be created
    * @param id The desired ID
-   * @returns
+   * @returns document ID of created document
    */
-  public create<T>(document: T, id?: string): Observable<any> {
-    if (!id) return from(this.collection.create(document));
-    return from(this.collection.create(id, document));
+  public create<T>(document: T, id?: string): Observable<documentId> {
+    let promise: Promise<documentId>;
+    if (!id) {
+      promise = this.collection.create(document);
+      return from(promise);
+    }
+    promise = this.collection.create(id, document);
+    return from(promise);
   }
 
   /**
@@ -51,8 +57,9 @@ export class AstraService {
    * @param options Possible searchoptions
    * @returns
    */
-  public findOne(query: any, options?: any): Observable<any> {
-    return from(this.collection.findOne(query, options));
+  public findOne<T>(query: any, options?: any): Observable<T> {
+    const promise: Promise<T> = this.collection.findOne(query, options);
+    return from(promise);
   }
 
   /**
@@ -61,8 +68,9 @@ export class AstraService {
    * @param document Document with which the existing should be updated
    * @returns
    */
-  public update<T>(path: string, document: T): Observable<any> {
-    return from(this.collection.update(path, document));
+  public update<T>(path: string, document: T): Observable<documentId> {
+    const promise: Promise<documentId> = this.collection.update(path, document);
+    return from(promise);
   }
 
   /**
@@ -71,8 +79,12 @@ export class AstraService {
    * @param document Document with which the specified docuent should be updated
    * @returns
    */
-  public replace<T>(path: string, document: T): Observable<any> {
-    return from(this.collection.replace(path, document));
+  public replace<T>(path: string, document: T): Observable<documentId> {
+    const promise: Promise<documentId> = this.collection.replace(
+      path,
+      document,
+    );
+    return from(promise);
   }
 
   /**
