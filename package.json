@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Nest.js module for connecting to DataStax Astra",
   "main": "dist/index.js",
+  "files": ["dist/**"],
   "publishConfig": {
     "registry":"https://npm.pkg.github.com/@Cahllagerfeld"
   },
