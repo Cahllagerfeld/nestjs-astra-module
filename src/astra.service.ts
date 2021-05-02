@@ -32,8 +32,8 @@ export class AstraService {
    * @param id The desired ID
    * @returns document ID of created document
    */
-  public create<T>(document: T, id?: string): Observable<documentId> {
-    let promise: Promise<documentId>;
+  public create<T>(document: T, id?: string): Observable<documentId | null> {
+    let promise: Promise<documentId | null>;
     if (!id) {
       promise = this.collection.create(document);
       return from(promise);
@@ -48,8 +48,8 @@ export class AstraService {
    * @param options Possible searchoptions
    * @returns
    */
-  public find<T>(query?: any, options?: any): Observable<findResult<T>> {
-    const promise: Promise<findResult<T>> = this.collection.find(
+  public find<T>(query?: any, options?: any): Observable<findResult<T> | null> {
+    const promise: Promise<findResult<T> | null> = this.collection.find(
       query,
       options,
     );
@@ -62,8 +62,8 @@ export class AstraService {
    * @param options Possible searchoptions
    * @returns
    */
-  public findOne<T>(query: any, options?: any): Observable<T> {
-    const promise: Promise<T> = this.collection.findOne(query, options);
+  public findOne<T>(query: any, options?: any): Observable<T | null> {
+    const promise: Promise<T | null> = this.collection.findOne(query, options);
     return from(promise);
   }
 
@@ -73,8 +73,11 @@ export class AstraService {
    * @param document Document with which the existing should be updated
    * @returns
    */
-  public update<T>(path: string, document: T): Observable<documentId> {
-    const promise: Promise<documentId> = this.collection.update(path, document);
+  public update<T>(path: string, document: T): Observable<documentId | null> {
+    const promise: Promise<documentId | null> = this.collection.update(
+      path,
+      document,
+    );
     return from(promise);
   }
 
@@ -84,8 +87,8 @@ export class AstraService {
    * @param document Document with which the specified docuent should be updated
    * @returns
    */
-  public replace<T>(path: string, document: T): Observable<documentId> {
-    const promise: Promise<documentId> = this.collection.replace(
+  public replace<T>(path: string, document: T): Observable<documentId | null> {
+    const promise: Promise<documentId | null> = this.collection.replace(
       path,
       document,
     );
@@ -97,7 +100,8 @@ export class AstraService {
    * @param path Path to document, that should be deleted
    * @returns
    */
-  public delete(path: string): Observable<any> {
-    return from(this.collection.delete(path));
+  public delete(path: string): Observable<null> {
+    const promise: Promise<null> = this.collection.delete(path);
+    return from(promise);
   }
 }
