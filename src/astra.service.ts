@@ -16,6 +16,7 @@ export class AstraService {
       .namespace(options.namespace)
       .collection(options.collection);
   }
+
   /**
    * Gets a document from a collection by its ID.
    * @param id ID of the document, that should be retrieved
