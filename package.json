@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "description": "Nest.js module for connecting to DataStax Astra",
   "main": "dist/index.js",
-  "files": ["dist/**"],
+  "files": [
+    "dist/**"
+  ],
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com/@Cahllagerfeld"
+    "registry": "https://npm.pkg.github.com/@Cahllagerfeld"
   },
   "repository": {
     "url": "git://github.com/Cahllagerfeld/nestjs-astra-module.git"
@@ -34,9 +36,9 @@
     "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.6.15",
     "@nestjs/testing": "^7.6.15",
-    "@types/jest": "^26.0.22",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
+    "@types/jest": "^26.0.23",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
@@ -45,7 +47,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.7",
-    "ts-jest": "^26.5.5",
+    "ts-jest": "^26.5.6",
     "typescript": "^4.2.4"
   },
   "jest": {
@@ -63,6 +65,6 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@astrajs/collections": "0.0.13"
+    "@astrajs/collections": "0.0.14"
   }
 }
