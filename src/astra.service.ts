@@ -4,6 +4,7 @@ import { AstraClientConfig } from './interfaces/astra-client-config.interface';
 import { from, Observable } from 'rxjs';
 import { documentId } from './interfaces/documentId.interface';
 import { findResult } from './interfaces/findResult.interface';
+import { deleteItem } from './interfaces/deleteItem.interface';
 
 @Injectable()
 export class AstraService {
@@ -101,8 +102,8 @@ export class AstraService {
    * @param path Path to document, that should be deleted
    * @returns
    */
-  public delete(path: string): Observable<null> {
-    const promise: Promise<null> = this.collection.delete(path);
+  public delete(path: string): Observable<deleteItem | null> {
+    const promise: Promise<deleteItem | null> = this.collection.delete(path);
     return from(promise);
   }
 }

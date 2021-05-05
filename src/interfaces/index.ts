@@ -6,3 +6,4 @@ export * from './astra-config-local.interface';
 export * from './connectionfactory.interface';
 export * from './documentId.interface';
 export * from './findResult.interface';
+export * from './deleteItem.interface';
