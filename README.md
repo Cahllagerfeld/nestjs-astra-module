@@ -14,16 +14,6 @@ Commits follow the standard [Conventional Commits](https://www.conventionalcommi
 $ npm install
 ```
 
-For testing it with a local project use
-
-```bash
-# sets up link
-$ npm link
-
-#connects package to a local npm-project
-$ npm link nestjs-astra
-```
-
 ## Usage
 
 The module is imported twice:
