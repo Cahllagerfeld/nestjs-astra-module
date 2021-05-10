@@ -1,14 +1,14 @@
 import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common';
-import { AstraDatastaxConfig } from './interfaces/astra-config-datastax.interface';
-import { AstraLocalConfig } from './interfaces/astra-config-local.interface';
+import { AstraConfig } from './interfaces/astra-config.interface';
+import { StargateConfig } from './interfaces/stargate-config.interface';
 // @ts-ignore
 import { createClient } from '@astrajs/collections';
 import { CLIENT_OPTIONS, DATASTAX_CLIENT } from './constants';
-import { AsyncAstraDatastaxConfig } from './interfaces/astra-async-config-datastax.interface';
-import { AsyncAstraLocalConfig } from './interfaces/astra-async-config-local.interface';
+import { AsyncAstraConfig } from './interfaces/astra-async-config.interface';
+import { AsyncStargateConfig } from './interfaces/stargate-async-config.interface';
 import { DatastaxOptionsFactory } from './interfaces/connectionfactory.interface';
 
-const connectionFactory = (options: AstraLocalConfig | AstraDatastaxConfig) => {
+const connectionFactory = (options: StargateConfig | AstraConfig) => {
   return {
     provide: DATASTAX_CLIENT,
     useFactory: async () => {
@@ -19,9 +19,7 @@ const connectionFactory = (options: AstraLocalConfig | AstraDatastaxConfig) => {
 @Global()
 @Module({})
 export class AstraCoreModule {
-  static forRoot(
-    options: AstraLocalConfig | AstraDatastaxConfig,
-  ): DynamicModule {
+  static forRoot(options: StargateConfig | AstraConfig): DynamicModule {
     const providers = [connectionFactory(options)];
     return {
       module: AstraCoreModule,
@@ -31,14 +29,13 @@ export class AstraCoreModule {
   }
 
   static forRootAsync(
-    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig,
+    options: AsyncAstraConfig | AsyncStargateConfig,
   ): DynamicModule {
     const provider: Provider = {
       inject: [CLIENT_OPTIONS],
       provide: DATASTAX_CLIENT,
-      useFactory: async (
-        options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig,
-      ) => await createClient(options),
+      useFactory: async (options: AsyncAstraConfig | AsyncStargateConfig) =>
+        await createClient(options),
     };
     return {
       module: AstraCoreModule,
@@ -48,7 +45,7 @@ export class AstraCoreModule {
   }
 
   private static createAsyncProviders(
-    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig,
+    options: AsyncAstraConfig | AsyncStargateConfig,
   ): Provider[] {
     if (options.useExisting || options.useFactory) {
       return [this.createAsyncOptionsProvider(options)];
@@ -64,7 +61,7 @@ export class AstraCoreModule {
   }
 
   private static createAsyncOptionsProvider(
-    options: AsyncAstraDatastaxConfig | AsyncAstraLocalConfig,
+    options: AsyncAstraConfig | AsyncStargateConfig,
   ): Provider {
     if (options.useFactory) {
       return {

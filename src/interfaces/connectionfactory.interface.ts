@@ -1,10 +1,10 @@
-import { AstraDatastaxConfig } from './astra-config-datastax.interface';
-import { AstraLocalConfig } from './astra-config-local.interface';
+import { AstraConfig } from './astra-config.interface';
+import { StargateConfig } from './stargate-config.interface';
 
 export interface DatastaxOptionsFactory {
   createDatastaxOptions():
-    | Promise<AstraDatastaxConfig>
-    | AstraDatastaxConfig
-    | AstraLocalConfig
-    | Promise<AstraLocalConfig>;
+    | Promise<AstraConfig>
+    | AstraConfig
+    | StargateConfig
+    | Promise<StargateConfig>;
 }
