@@ -1,4 +1,4 @@
-export interface AstraLocalConfig {
+export interface StargateConfig {
   baseUrl: string;
   baseApiPath?: string;
   authToken?: string;
