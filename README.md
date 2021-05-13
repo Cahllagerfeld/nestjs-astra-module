@@ -21,89 +21,28 @@ The module is imported twice:
 1. The Core-Module sets up the connection to DataStax Astra / LocalStargate using `forRoot` or `forRootAsync`- Function
 1. The `forFeature`-Function sets collection and namespace in the specific module where the database should be used
 
-### Initialization Core-Module
+### Initialization Core
 
-The Core-Module can be initialized synchronous and asynchronous using `forRoot` or `forRootAsync`
+The Core-Module can be initialized synchronous and asynchronous using `forRoot` or `forRootAsync`.
+This part of the module sets up the actual connection to the service. That's why it only needs to be configured once - Preferable in the `app.module`.
+Depending on the use-case (connection to `local stargate` or `astra`), different configurations need to be passed in.
 
-Example asynchronous initialization
+Some example implementations can be found in the [docs folder](/docs)
 
-```ts
-/*app.module.ts*/
+### Feature-Modules
 
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AstraModule } from 'nestjs-astra';
-import { createDatastaxOptions } from './astraConfig.service';
-
-@Module({
-  imports: [
-    AstraModule.forRootAsync({
-      useClass: createDatastaxOptions,
-    }),
-    TestModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
-})
-export class AppModule {}
-```
-
-Config is set in `astraConfig.service.ts`
-
-```ts
-/*astraConfig.service.ts*/
-
-import { Injectable } from '@nestjs/common';
-import {
-  AstraDatastaxConfig,
-  AstraLocalConfig,
-  DatastaxOptionsFactory,
-} from 'nestjs-astra';
-
-@Injectable()
-export class createDatastaxOptions implements DatastaxOptionsFactory {
-  createDatastaxOptions(): AstraLocalConfig | AstraDatastaxConfig {
-    return {
-      authToken: '<Your-Super-Secret-Token>',
-      baseApiPath: 'v2/namespaces',
-      baseUrl: 'http://localhost:8082',
-    };
-  }
-}
-```
-
-Example synchronous initialization
-
-```ts
-/*app.module.ts*/
-
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AstraModule } from 'nestjs-astra';
-
-@Module({
-  imports: [
-    AstraModule.forRoot({
-      authToken: '<Your-Super-Secret-Token>',
-      baseApiPath: 'v2/namespaces',
-      baseUrl: 'http://localhost:8082',
-    }),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
-})
-export class AppModule {}
-```
+By developing different module within your `nest`-Application you need to store different data in different collections.
+The `forFeature`-function enables you to do this. It can be imported to specific feature-modules, but relies on the Core-Module.
 
 ### Usage in Feature-Module
+
+The following snippet shows how the `forFeature`-function is implemented. In this case the initialization between `local stargate` and `astra` dont differ.
 
 ```ts
 /*users.module.ts*/
 
 import { Module } from '@nestjs/common';
-import { AstraModule } from 'nestjs-astra';
+import { AstraModule } from '@cahllagerfeld/nestjs-astra';
 import { usersController } from './users.controller';
 import { usersService } from './users.service';
 
@@ -115,6 +54,29 @@ import { usersService } from './users.service';
   providers: [usersService],
 })
 export class usersModule {}
+```
+
+## Astra Service
+
+The Astra-Service is a service, which can be ejected like every other service.
+The Service provides the actual functions for performing actions with `local stargate` or `Astra`
+The Services is observable-based.
+
+```ts
+//user.service.ts
+
+import { AstraService, documentId } from '@cahllagerfeld/nestjs-astra';
+import { Injectable } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { user } from './user.interface';
+
+@Injectable()
+export class UserService {
+  constructor(private readonly astra: AstraService) {}
+  addUser(data: user): Observable<documentId> {
+    return this.astra.create<user>(data);
+  }
+}
 ```
 
 ## License
