@@ -2,7 +2,7 @@
 
 ## Description
 
-Nest.js-Astra Module for Eddiehub-Project. It uses [@astrajs/collections](https://github.com/datastax/astrajs/tree/master/packages/collections) to connect to Datastax Astra, or a local Stargate container.
+Nest.js-Astra Module for [EddieHub API Project](https://github.com/EddieHubCommunity/api). It uses [@astrajs/collections](https://github.com/datastax/astrajs/tree/master/packages/collections) to connect to Datastax Astra, or a local Stargate container.
 
 ## Rules
 
