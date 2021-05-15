@@ -2,13 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AstraService } from './astra.service';
 import { CLIENT_OPTIONS } from './constants';
 import { AstraCoreModule } from './astra-core.module';
-import { AstraLocalConfig } from './interfaces/astra-config-local.interface';
+import { StargateConfig } from './interfaces/stargate-config.interface';
 
 describe('AstraService', () => {
   let service: AstraService;
 
   beforeEach(async () => {
-    const options: AstraLocalConfig = {
+    const options: StargateConfig = {
       authToken: 'asdf',
       baseApiPath: 'v2/namespaces',
       baseUrl: 'http://localhost:8082',
