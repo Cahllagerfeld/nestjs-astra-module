@@ -10,6 +10,8 @@ Commits follow the standard [Conventional Commits](https://www.conventionalcommi
 
 ## Setup
 
+The module is only available via Github. Thats why you have to create a `.npmrc`-File in your project and configure it.
+
 ```bash
 $ npm install
 ```
