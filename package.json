@@ -1,6 +1,6 @@
 {
   "name": "@cahllagerfeld/nestjs-astra",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Nest.js module for connecting to DataStax Astra",
   "main": "dist/index.js",
   "files": [
